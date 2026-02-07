@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الأخوين لصيانة الهواتف</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #25d366;
+            --bg-dark: #0a0a0a;
+            --card-bg: #161616;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* خلفية فخمة */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--primary-color); text-shadow: 2px 2px 10px rgba(0,123,255,0.5); }
+        
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+
+        /* ترتيب الخدمات بشكل كروت */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: -40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0,123,255,0.2);
+        }
+
+        .card i { font-size: 40px; color: var(--primary-color); margin-bottom: 15px; }
+
+        /* قسم الواتساب */
+        .contact-section {
+            margin-top: 50px;
+            padding: 40px;
+            background: #111;
+            border-radius: 20px;
+            border: 1px dashed var(--primary-color);
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary-color);
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 50px;
+            margin: 15px auto;
+            font-weight: bold;
+            font-size: 1.1rem;
+            width: fit-content;
+            transition: 0.3s;
+        }
+
+        .btn i { margin-left: 10px; font-size: 1.4rem; }
+        .btn:hover { background: #1da851; transform: scale(1.05); }
+
+        footer { margin-top: 50px; padding: 20px; color: #666; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1><i class="fas fa-tools"></i> مركز الأخوين للصيانة</h1>
+        <p>نحيي هاتفك من جديد بأحدث الأجهزة وبأيدي خبراء وتوجد خدمة توصيل من والى المنازل</p>
+    </div>
+
+    <div class="container">
+        <div class="services-grid">
+            <div class="card">
+                <i class="fas fa-mobile-screen-button"></i>
+                <h3>تبديل شاشات</h3>
+                <p>شاشات أصلية (OLED & LCD) مع ضمان حقيقي ضد العيوب.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-microchip"></i>
+                <h3>صيانة بورد</h3>
+                <p>إصلاح أعطال الشحن، الباور، والـ IC بأدق المجهرات.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-unlock-keyhole"></i>
+                <h3>سوفتوير</h3>
+                <p>فك شفرات، تخطي حساب جوجل، وتحديث الأنظمة.</p>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h2><i class="fab fa-whatsapp"></i> هل تحتاج لمساعدة؟</h2>
+            <p>اضغط على أحد الأرقام لمراسلتنا فوراً عبر واتساب</p>
+            
+            <a href="https://wa.me/9647830331834" class="btn">
+                 تواصل مع المهندس علي (1) <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://wa.me/9647830331712" class="btn">
+                 تواصل مع المهندس حيدر (2) <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <footer>
+            جميع الحقوق محفوظة لمركز الأخوين &copy; 2026
+        </footer>
+    </div>
+
+</body>
+</html>
