@@ -3,93 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتب الأخوين التكنولوجي</title>
+    <title>مكتب الأخوين </title>
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            text-align: center; 
-            background-color: #f4f7f6; 
-            margin: 0; 
-            padding: 0; 
-            color: #333;
-        }
+        :root { --blue: #1a73e8; --orange: #ffa000; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
         
         header {
-            background-color: #1a73e8;
+            background-color: var(--blue);
             color: white;
-            padding: 40px 20px 80px 20px;
+            padding: 50px 20px 100px 20px;
             border-radius: 0 0 50px 50px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-
-        h1 { margin: 0; font-size: 2.2em; font-weight: bold; }
+        h1 { margin: 0; font-size: 2.4em; }
         .subtitle { font-size: 1.1em; opacity: 0.9; margin-top: 10px; }
 
-        /* صندوق البحث الاحترافي */
-        .search-area {
+        /* صندوق البحث */
+        .search-container {
             background: white;
             max-width: 500px;
-            margin: -40px auto 30px auto;
+            margin: -60px auto 40px auto;
             padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 25px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
             position: relative;
             z-index: 10;
-            border-top: 5px solid #ffa000;
+            border-bottom: 5px solid var(--orange);
         }
-
         .search-box { display: flex; gap: 10px; margin-top: 15px; }
-        input { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 12px; outline: none; text-align: center; font-size: 1em; }
-        .btn-track { padding: 12px 25px; background-color: #1a73e8; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        input { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 12px; outline: none; text-align: center; font-size: 1.1em; }
+        .btn-track { padding: 12px 25px; background: var(--blue); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
 
-        /* عرض النتائج */
+        /* عرض النتائج - تفاصيل مرتبة */
         #search-result { margin-top: 20px; display: none; text-align: right; }
-        .status-highlight { background: #fff8e1; border: 2px solid #ffa000; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
-        .status-val { font-size: 1.3em; font-weight: bold; color: #d35400; display: block; }
-        .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f1f1; font-size: 0.9em; }
-        .info-label { font-weight: bold; color: #1a73e8; }
-
-        /* حاوية الأقسام */
-        .container { 
+        .result-item { 
             display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            gap: 20px; 
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            justify-content: space-between; 
+            padding: 12px 10px; 
+            border-bottom: 1px solid #eee; 
+            font-size: 1em;
         }
+        .result-label { font-weight: bold; color: var(--blue); }
+        .result-value { color: #333; font-weight: 500; }
+        
+        /* رسائل الخطأ والتحميل */
+        .not-found { color: #d32f2f; background: #ffebee; padding: 15px; border-radius: 12px; font-weight: bold; }
+        .loading { color: var(--blue); font-weight: bold; }
 
-        .card { 
-            background: #ffffff; 
-            border-radius: 20px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
-            width: 260px; 
-            overflow: hidden; 
-            transition: 0.3s;
-            border: 1px solid #eee;
-        }
-        .card:hover { transform: translateY(-5px); }
+        /* الأقسام الأربعة */
+        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; margin-top: 20px; }
+        .card { background: white; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); width: 260px; overflow: hidden; border: 1px solid #eee; }
         .card img { width: 100%; height: 160px; object-fit: cover; }
         .card-content { padding: 15px; }
-        .btn-wa { display: inline-block; padding: 8px 20px; background-color: #25d366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9em; }
-
-        .visitor-counter { margin: 30px 0; color: #888; font-size: 0.8em; }
+        .btn-wa { display: inline-block; padding: 8px 20px; background: #25d366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>مكتب الأخوين التكنولوجي</h1>
-        <div class="subtitle">صيانة موبايل وحاسبات | كاميرات | مشاريع تخرج</div>
+        <h1>مكتب الأخوين </h1>
+        <div class="subtitle">صيانة هواتف | حاسبات | كاميرات | مشاريع تخرج</div>
     </header>
 
-    <div class="search-area">
-        <h3 style="margin:0; color:#1a73e8;">🔍 تتبع حالة جهازك</h3>
-        <p style="font-size:0.9em; color:#666;">أدخل رقم الوصل لمعرفة أين وصل جهازك الآن</p>
+    <div class="search-container">
+        <h3 style="margin:0; color: var(--blue);">🔍 تتبع حالة جهازك</h3>
         <div class="search-box">
-            <input type="text" id="orderID" placeholder="رقم الوصل (مثال: 122)">
-            <button class="btn-track" onclick="checkStatus()">بحث</button>
+            <input type="text" id="orderID" placeholder="أدخل رقم الوصل هنا">
+            <button class="btn-track" onclick="trackOrder()">بحث</button>
         </div>
         <div id="search-result"></div>
     </div>
@@ -97,77 +77,58 @@
     <div class="container">
         <div class="card">
             <img src="mobile.png" alt="صيانة الهواتف">
-            <div class="card-content">
-                <h3>صيانة الهواتف</h3>
-                <a href="https://wa.me/9647830331712" class="btn-wa">تواصل معنا</a>
-            </div>
+            <div class="card-content"><h3>صيانة الهواتف</h3><a href="https://wa.me/9647830331712" class="btn-wa">تواصل</a></div>
         </div>
         <div class="card">
             <img src="laptop.jpg" alt="صيانة الحاسبات">
-            <div class="card-content">
-                <h3>صيانة الحاسبات</h3>
-                <a href="https://wa.me/9647830331834" class="btn-wa">تواصل معنا</a>
-            </div>
+            <div class="card-content"><h3>صيانة الحاسبات</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
         </div>
         <div class="card">
             <img src="cameras.jpg" alt="كاميرات المراقبة">
-            <div class="card-content">
-                <h3>كاميرات المراقبة</h3>
-                <a href="https://wa.me/9647830331712" class="btn-wa">احجز موعد</a>
-            </div>
+            <div class="card-content"><h3>كاميرات المراقبة</h3><a href="https://wa.me/9647830331712" class="btn-wa">تواصل</a></div>
         </div>
         <div class="card">
             <img src="projects.jpg" alt="مشاريع التخرج">
-            <div class="card-content">
-                <h3>مشاريع التخرج</h3>
-                <a href="https://wa.me/9647830331834" class="btn-wa">استفسر الآن</a>
-            </div>
+            <div class="card-content"><h3>مشاريع التخرج</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
         </div>
     </div>
 
-    <div class="visitor-counter">
-        <p>عدد زوار الموقع أونلاين:</p>
-        <img src="https://hitwebcounter.com/counter/counter.php?page=alakhwaen&style=0006&nbdigits=5&type=page&initCount=0" border="0" />
-    </div>
-
     <script>
-        async function checkStatus() {
+        async function trackOrder() {
             const id = document.getElementById('orderID').value.trim();
-            const resDiv = document.getElementById('search-result');
-            if(!id) return;
+            const resultDiv = document.getElementById('search-result');
+            if (!id) return;
 
-            resDiv.style.display = "block";
-            resDiv.innerHTML = "جاري البحث في السجلات...";
+            resultDiv.style.display = "block";
+            resultDiv.innerHTML = "<p class='loading'>جاري البحث في السجلات...</p>";
 
             try {
-                const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&cache=${new Date().getTime()}`;
-                const response = await fetch(url);
-                const csvData = await response.text();
-                const rows = csvData.split('\n').map(r => r.split(','));
+                const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&t=${new Date().getTime()}`;
+                const res = await fetch(url);
+                const data = await res.text();
+                const rows = data.split('\n').map(r => r.split(','));
                 const headers = rows[0];
-                const target = rows.find(r => r.some(cell => cell.trim() === id));
+                
+                // البحث عن السطر اللي يطابق رقم الوصل
+                const found = rows.find(r => r[0].trim() === id);
 
-                if(target) {
-                    let notesIdx = headers.findIndex(h => h.includes("ملاحظات"));
-                    let notes = notesIdx !== -1 ? target[notesIdx] : "قيد المعالجة";
-                    
-                    let html = `
-                        <div class="status-highlight">
-                            <span style="color:#666; font-size:0.9em;">حالة الجهاز حالياً:</span>
-                            <span class="status-val">${notes}</span>
-                        </div>
-                    `;
-                    target.forEach((val, i) => {
-                        if(i !== notesIdx && val.trim() !== "") {
-                            html += `<div class="info-row"><span class="info-label">${headers[i]}:</span><span>${val}</span></div>`;
+                if (found) {
+                    let html = `<div style="text-align:center; font-weight:bold; margin-bottom:15px; color:#155724;">✅ تم العثور على الوصل</div>`;
+                    found.forEach((cell, i) => {
+                        if (cell.trim() !== "") {
+                            html += `
+                                <div class="result-item">
+                                    <span class="result-value">${cell.trim()}</span>
+                                    <span class="result-label">${headers[i] ? headers[i].trim() : 'معلومة'}:</span>
+                                </div>`;
                         }
                     });
-                    resDiv.innerHTML = html;
+                    resultDiv.innerHTML = html;
                 } else {
-                    resDiv.innerHTML = "<div style='color:red; text-align:center;'>❌ الرقم غير موجود، تأكد من الوصل.</div>";
+                    resultDiv.innerHTML = `<div class="not-found">عذراً.. لا يوجد وصل بهذا الرقم. تأكد من الرقم مرة أخرى.</div>`;
                 }
-            } catch(e) {
-                resDiv.innerHTML = "حدث خطأ في الاتصال.";
+            } catch (e) {
+                resultDiv.innerHTML = `<div class="not-found">حدث خطأ في الاتصال. يرجى المحاولة لاحقاً.</div>`;
             }
         }
     </script>
