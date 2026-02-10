@@ -6,124 +6,76 @@
     <title>مكتب الأخوين التكنولوجي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --blue: #1a73e8; --green: #25d366; --orange: #ffa000; --bg: #f0f2f5; }
+        :root { --main: #1a73e8; --accent: #ffa000; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; }
         
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
-        
-        /* هيدر بتفاعل وألوان ملكية */
         header {
-            background: linear-gradient(135deg, var(--blue), #0d47a1);
-            color: white;
-            padding: 60px 20px 100px 20px;
-            border-radius: 0 0 50px 50px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, var(--main), #0d47a1);
+            color: white; padding: 50px 20px 100px 20px; border-radius: 0 0 50px 50px;
         }
-        header h1 { margin: 0; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
-        header p { opacity: 0.9; font-size: 1.1em; margin-top: 10px; }
 
-        /* صندوق البحث - تفاعل ذكي */
-        .search-container {
-            background: white;
-            max-width: 500px;
-            margin: -50px auto 40px auto;
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 10;
-            transition: 0.3s;
+        .search-area {
+            background: white; max-width: 500px; margin: -60px auto 30px auto;
+            padding: 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative; z-index: 10;
         }
-        .search-container:hover { transform: translateY(-5px); }
-        .search-box { display: flex; gap: 10px; margin-top: 20px; }
-        input { flex: 1; padding: 14px; border: 2px solid #eee; border-radius: 15px; outline: none; font-size: 1.1em; transition: 0.3s; }
-        input:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(26,115,232,0.1); }
-        .btn-track { padding: 12px 25px; background: var(--blue); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 1.1em; transition: 0.3s; }
-        .btn-track:hover { background: #0d47a1; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-        /* عرض النتائج بتصميم سطر بسطر (التعريف : القيمة) */
-        #result-display { margin-top: 25px; display: none; text-align: right; }
-        .info-card { 
-            background: #fff; border: 1px solid #edf2f7; padding: 12px 20px; 
-            margin-bottom: 10px; border-radius: 12px; display: flex; 
-            justify-content: space-between; align-items: center;
-            animation: slideIn 0.4s ease-out forwards;
+        .search-box { display: flex; gap: 10px; margin-top: 15px; }
+        input { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 12px; outline: none; text-align: center; }
+        button { padding: 12px 25px; background: var(--main); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+
+        /* عرض النتائج سطر بسطر */
+        #result { margin-top: 20px; display: none; text-align: right; }
+        .data-row { 
+            display: flex; justify-content: space-between; padding: 10px; 
+            border-bottom: 1px solid #eee; background: #fff;
         }
-        .info-label { color: var(--blue); font-weight: bold; font-size: 0.9em; display: flex; align-items: center; gap: 8px; }
-        .info-value { font-weight: 600; color: #2d3748; }
+        .data-label { color: var(--main); font-weight: bold; }
+        .data-val { color: #333; }
 
-        /* الأقسام الأربعة بأيقونات تخبل */
-        .grid-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; padding: 20px; max-width: 1100px; margin: 0 auto; }
-        .card { 
-            background: white; border-radius: 25px; width: 240px; padding: 30px 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.4s;
-            border: 1px solid #f0f0f0; position: relative; overflow: hidden;
-        }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: var(--blue); }
-        .card i { font-size: 3.5em; color: var(--blue); margin-bottom: 20px; display: block; transition: 0.3s; }
-        .card:hover i { transform: scale(1.1); color: var(--orange); }
-        .card h3 { margin: 10px 0; font-size: 1.3em; }
-        .btn-wa { 
-            display: inline-block; margin-top: 15px; padding: 10px 25px; 
-            background: var(--green); color: white; text-decoration: none; 
-            border-radius: 50px; font-weight: bold; transition: 0.3s;
-        }
-        .btn-wa:hover { transform: scale(1.1); box-shadow: 0 5px 15px rgba(37,211,102,0.3); }
+        .error-msg { background: #fee2e2; color: #dc2626; padding: 15px; border-radius: 12px; font-weight: bold; }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-
-        .error-msg { background: #fff5f5; color: #c53030; padding: 15px; border-radius: 15px; font-weight: bold; border: 1px solid #fed7d7; }
+        /* الأقسام مالتك */
+        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
+        .card { background: white; border-radius: 20px; width: 220px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); border: 1px solid var(--main); }
+        .card i { font-size: 3em; color: var(--main); margin-bottom: 15px; display: block; }
+        .btn-wa { display: inline-block; margin-top: 10px; padding: 8px 20px; background: #25d366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1><i class="fas fa-microchip"></i> مكتب الأخوين</h1>
-    <p>صيانة هواتف | حاسبات | كاميرات | مشاريع تخرج</p>
+    <h1>مكتب الأخوين</h1>
+    <p>تتبع حالة جهازك بكل سهولة</p>
 </header>
 
-<div class="search-container">
-    <h3 style="margin:0; color: var(--blue);"><i class="fas fa-search-location"></i> تتبع حالة جهازك</h3>
+<div class="search-area">
+    <h3 style="margin:0; color: var(--main);"><i class="fas fa-search"></i> استعلام عن وصل</h3>
     <div class="search-box">
-        <input type="text" id="orderID" placeholder="أدخل رقم الوصل هنا">
-        <button class="btn-track" onclick="track()">بحث</button>
+        <input type="text" id="orderID" placeholder="اكتب رقم الوصل هنا">
+        <button onclick="search()">بحث</button>
     </div>
-    <div id="result-display"></div>
+    <div id="result"></div>
 </div>
 
-<div class="grid-container">
-    <div class="card">
-        <i class="fas fa-mobile-alt"></i>
-        <h3>صيانة الهواتف</h3>
-        <a href="https://wa.me/9647830331712" class="btn-wa"><i class="fab fa-whatsapp"></i> تواصل</a>
-    </div>
-    <div class="card">
-        <i class="fas fa-laptop"></i>
-        <h3>صيانة الحاسبات</h3>
-        <a href="https://wa.me/9647830331834" class="btn-wa"><i class="fab fa-whatsapp"></i> تواصل</a>
-    </div>
-    <div class="card">
-        <i class="fas fa-camera-home"></i>
-        <h3>كاميرات مراقبة</h3>
-        <a href="https://wa.me/9647830331712" class="btn-wa"><i class="fab fa-whatsapp"></i> تواصل</a>
-    </div>
-    <div class="card">
-        <i class="fas fa-code-branch"></i>
-        <h3>مشاريع تخرج</h3>
-        <a href="https://wa.me/9647830331834" class="btn-wa"><i class="fab fa-whatsapp"></i> تواصل</a>
-    </div>
+<div class="grid">
+    <div class="card"><i class="fas fa-mobile-alt"></i><h3>صيانة الموبايل</h3><a href="https://wa.me/9647830331712" class="btn-wa">تواصل</a></div>
+    <div class="card"><i class="fas fa-laptop"></i><h3>صيانة الحاسبات</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
+    <div class="card"><i class="fas fa-camera"></i><h3>الكاميرات</h3><a href="https://wa.me/9647830331712" class="btn-wa">تواصل</a></div>
+    <div class="card"><i class="fas fa-graduation-cap"></i><h3>مشاريع تخرج</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
 </div>
 
 <script>
-async function track() {
+async function search() {
     const id = document.getElementById('orderID').value.trim();
-    const out = document.getElementById('result-display');
+    const out = document.getElementById('result');
     if(!id) return;
-
     out.style.display = "block";
-    out.innerHTML = "<p><i class='fas fa-spinner fa-spin'></i> جاري البحث...</p>";
+    out.innerHTML = "جاري البحث...";
 
     try {
-        const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&t=${new Date().getTime()}`;
+        const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&t=${Date.now()}`;
         const res = await fetch(url);
         const data = await res.text();
         const rows = data.split('\n').map(r => r.split(','));
@@ -131,25 +83,20 @@ async function track() {
         const row = rows.find(r => r[0]?.trim() === id || r[2]?.trim() === id);
 
         if(row) {
-            let html = `<div style="text-align:center; font-weight:bold; color:var(--blue); margin-bottom:15px;"><i class="fas fa-check-circle"></i> تم العثور على الوصل</div>`;
+            let html = `<div style="text-align:center; font-weight:bold; color:green; margin-bottom:10px;">✅ تفاصيل الوصل:</div>`;
             row.forEach((val, i) => {
                 if(val && val.trim() !== "") {
-                    html += `
-                    <div class="info-card">
-                        <span class="info-value">${val.trim()}</span>
-                        <span class="info-label">${headers[i] ? headers[i].trim() : 'معلومة'}</span>
-                    </div>`;
+                    html += `<div class="data-row"><span class="data-val">${val.trim()}</span><span class="data-label">${headers[i] ? headers[i].trim() : 'معلومة'}:</span></div>`;
                 }
             });
             out.innerHTML = html;
         } else {
-            out.innerHTML = `<div class="error-msg"><i class="fas fa-exclamation-triangle"></i> عذراً، رقم الوصل (${id}) غير موجود.</div>`;
+            out.innerHTML = `<div class="error-msg">❌ عذراً، لا يوجد وصل بهذا الرقم.</div>`;
         }
     } catch(e) {
-        out.innerHTML = `<div class="error-msg">حدث خطأ في الاتصال بالبيانات.</div>`;
+        out.innerHTML = `<div class="error-msg">حدث خطأ في جلب البيانات.</div>`;
     }
 }
 </script>
-
 </body>
 </html>
