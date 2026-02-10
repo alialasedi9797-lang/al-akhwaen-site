@@ -3,29 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتب الأخوين - خدمات تكنولوجية متكاملة</title>
+    <title>مكتب الأخوين التكنولوجي</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; 
             background-color: #f4f7f6; 
             margin: 0; 
-            padding: 20px; 
+            padding: 0; 
             color: #333;
         }
         
         header {
             background-color: #1a73e8;
             color: white;
-            padding: 40px 20px;
+            padding: 40px 20px 80px 20px;
             border-radius: 0 0 50px 50px;
-            margin: -20px -20px 40px -20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        h1 { margin: 0; font-size: 2.2em; }
+        h1 { margin: 0; font-size: 2.2em; font-weight: bold; }
         .subtitle { font-size: 1.1em; opacity: 0.9; margin-top: 10px; }
 
+        /* صندوق البحث الاحترافي */
+        .search-area {
+            background: white;
+            max-width: 500px;
+            margin: -40px auto 30px auto;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+            border-top: 5px solid #ffa000;
+        }
+
+        .search-box { display: flex; gap: 10px; margin-top: 15px; }
+        input { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 12px; outline: none; text-align: center; font-size: 1em; }
+        .btn-track { padding: 12px 25px; background-color: #1a73e8; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+
+        /* عرض النتائج */
+        #search-result { margin-top: 20px; display: none; text-align: right; }
+        .status-highlight { background: #fff8e1; border: 2px solid #ffa000; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
+        .status-val { font-size: 1.3em; font-weight: bold; color: #d35400; display: block; }
+        .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f1f1; font-size: 0.9em; }
+        .info-label { font-weight: bold; color: #1a73e8; }
+
+        /* حاوية الأقسام */
         .container { 
             display: flex; 
             flex-wrap: wrap; 
@@ -33,97 +57,119 @@
             gap: 20px; 
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         .card { 
             background: #ffffff; 
             border-radius: 20px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-            width: 280px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            width: 260px; 
             overflow: hidden; 
             transition: 0.3s;
             border: 1px solid #eee;
-            margin-bottom: 20px;
         }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 160px; object-fit: cover; }
+        .card-content { padding: 15px; }
+        .btn-wa { display: inline-block; padding: 8px 20px; background-color: #25d366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9em; }
 
-        .card:hover { transform: translateY(-10px); }
-
-        .card img { 
-            width: 100%; 
-            height: 180px; 
-            object-fit: cover; 
-            background-color: #eaeaea;
-        }
-
-        .card-content { padding: 20px; }
-        .card h3 { margin: 0 0 10px 0; color: #1a73e8; font-size: 1.3em; height: 50px; display: flex; align-items: center; justify-content: center; }
-        .card p { color: #666; font-size: 0.95em; line-height: 1.5; margin-bottom: 20px; height: 60px; overflow: hidden; }
-
-        .btn { 
-            display: inline-block; 
-            padding: 10px 25px; 
-            background-color: #25d366; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 50px; 
-            font-weight: bold; 
-            transition: 0.3s;
-        }
-
-        .btn:hover { background-color: #128c7e; }
-
-        .visitor-counter { margin-top: 50px; padding: 20px; font-size: 0.9em; color: #888; }
+        .visitor-counter { margin: 30px 0; color: #888; font-size: 0.8em; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>مكتب الأخوين</h1>
-        <div class="subtitle">صيانة هواتف وحاسبات | كاميرات مراقبة | مشاريع تخرج</div>
+        <h1>مكتب الأخوين التكنولوجي</h1>
+        <div class="subtitle">صيانة موبايل وحاسبات | كاميرات | مشاريع تخرج</div>
     </header>
+
+    <div class="search-area">
+        <h3 style="margin:0; color:#1a73e8;">🔍 تتبع حالة جهازك</h3>
+        <p style="font-size:0.9em; color:#666;">أدخل رقم الوصل لمعرفة أين وصل جهازك الآن</p>
+        <div class="search-box">
+            <input type="text" id="orderID" placeholder="رقم الوصل (مثال: 122)">
+            <button class="btn-track" onclick="checkStatus()">بحث</button>
+        </div>
+        <div id="search-result"></div>
+    </div>
 
     <div class="container">
         <div class="card">
             <img src="mobile.png" alt="صيانة الهواتف">
             <div class="card-content">
                 <h3>صيانة الهواتف</h3>
-                <p>تصليح كافة أنواع الموبايلات، تبديل شاشات وبطاريات بأحدث الأجهزة.</p>
-                <a href="https://wa.me/9647830331712" class="btn">اطلب صيانة</a>
+                <a href="https://wa.me/9647830331712" class="btn-wa">تواصل معنا</a>
             </div>
         </div>
-
         <div class="card">
             <img src="laptop.jpg" alt="صيانة الحاسبات">
             <div class="card-content">
                 <h3>صيانة الحاسبات</h3>
-                <p>فرمتة، تنصيب برامج، صيانة هاردوير وتطوير الحاسبات (SSD).</p>
-                <a href="https://wa.me/9647830331834" class="btn">اطلب صيانة</a>
+                <a href="https://wa.me/9647830331834" class="btn-wa">تواصل معنا</a>
             </div>
         </div>
-
         <div class="card">
             <img src="cameras.jpg" alt="كاميرات المراقبة">
             <div class="card-content">
                 <h3>كاميرات المراقبة</h3>
-                <p>تنصيب وصيانة أحدث منظومات الكاميرات بدقة عالية وربطها على الموبايل.</p>
-                <a href="https://wa.me/9647830331712" class="btn">احجز موعد</a>
+                <a href="https://wa.me/9647830331712" class="btn-wa">احجز موعد</a>
             </div>
         </div>
-
         <div class="card">
             <img src="projects.jpg" alt="مشاريع التخرج">
             <div class="card-content">
                 <h3>مشاريع التخرج</h3>
-                <p>إنشاء مشاريع التخرج البرمجية والإلكترونية وبيع القطع والأجزاء الإلكترونية.</p>
-                <a href="https://wa.me/9647830331834" class="btn">استفسر الآن</a>
+                <a href="https://wa.me/9647830331834" class="btn-wa">استفسر الآن</a>
             </div>
         </div>
     </div>
 
     <div class="visitor-counter">
-        <p>عدد زوار المكتب أونلاين:</p>
+        <p>عدد زوار الموقع أونلاين:</p>
         <img src="https://hitwebcounter.com/counter/counter.php?page=alakhwaen&style=0006&nbdigits=5&type=page&initCount=0" border="0" />
     </div>
 
+    <script>
+        async function checkStatus() {
+            const id = document.getElementById('orderID').value.trim();
+            const resDiv = document.getElementById('search-result');
+            if(!id) return;
+
+            resDiv.style.display = "block";
+            resDiv.innerHTML = "جاري البحث في السجلات...";
+
+            try {
+                const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&cache=${new Date().getTime()}`;
+                const response = await fetch(url);
+                const csvData = await response.text();
+                const rows = csvData.split('\n').map(r => r.split(','));
+                const headers = rows[0];
+                const target = rows.find(r => r.some(cell => cell.trim() === id));
+
+                if(target) {
+                    let notesIdx = headers.findIndex(h => h.includes("ملاحظات"));
+                    let notes = notesIdx !== -1 ? target[notesIdx] : "قيد المعالجة";
+                    
+                    let html = `
+                        <div class="status-highlight">
+                            <span style="color:#666; font-size:0.9em;">حالة الجهاز حالياً:</span>
+                            <span class="status-val">${notes}</span>
+                        </div>
+                    `;
+                    target.forEach((val, i) => {
+                        if(i !== notesIdx && val.trim() !== "") {
+                            html += `<div class="info-row"><span class="info-label">${headers[i]}:</span><span>${val}</span></div>`;
+                        }
+                    });
+                    resDiv.innerHTML = html;
+                } else {
+                    resDiv.innerHTML = "<div style='color:red; text-align:center;'>❌ الرقم غير موجود، تأكد من الوصل.</div>";
+                }
+            } catch(e) {
+                resDiv.innerHTML = "حدث خطأ في الاتصال.";
+            }
+        }
+    </script>
 </body>
 </html>
