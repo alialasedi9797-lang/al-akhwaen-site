@@ -3,92 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتب الأخوين - تتبع تفصيلي</title>
+    <title>مكتب الأخوين </title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center; background-color: #f4f7f6; margin: 0; padding: 0; }
-        header { background: #1a73e8; color: white; padding: 40px 20px 80px 20px; border-radius: 0 0 50px 50px; }
-        .tracking-container { background: white; max-width: 500px; margin: -50px auto 30px auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; z-index: 10; border-bottom: 5px solid #1a73e8; }
-        .tracking-box { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
-        input { padding: 12px; border: 2px solid #eee; border-radius: 12px; width: 60%; outline: none; }
-        .btn-track { padding: 12px 20px; background: #1a73e8; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center; background-color: #f0f4f8; margin: 0; padding: 0; color: #333; }
+        header { background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white; padding: 50px 20px 80px 20px; border-radius: 0 0 40px 40px; }
+        .search-section { background: white; max-width: 500px; margin: -40px auto 30px auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-top: 5px solid #ffa000; }
+        .search-box { display: flex; gap: 10px; margin-top: 15px; }
+        input { flex: 1; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; outline: none; transition: 0.3s; }
+        input:focus { border-color: #1a73e8; }
+        .btn-search { padding: 12px 25px; background: #1a73e8; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 16px; }
         
-        /* صندوق النتائج التفصيلي */
-        #result { margin-top: 20px; padding: 15px; border-radius: 12px; display: none; text-align: right; background: #f9f9f9; border: 1px solid #ddd; }
-        .info-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.95em; }
-        .info-label { font-weight: bold; color: #1a73e8; }
-        .info-value { color: #333; }
-        .status-notfound { color: #721c24; background: #f8d7da; text-align: center; padding: 10px; border-radius: 8px; }
-
-        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
-        .card { background: white; border-radius: 20px; width: 250px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .btn-wa { display: inline-block; padding: 10px 20px; background: #25d366; color: white; text-decoration: none; border-radius: 50px; margin: 15px; }
+        /* تصميم عرض بيانات الوصل */
+        #details-output { margin-top: 25px; display: none; text-align: right; }
+        .report-header { text-align: center; font-weight: bold; color: #1a73e8; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.2em; }
+        .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f9f9f9; font-size: 0.95em; }
+        .data-label { font-weight: bold; color: #555; background: #f0f7ff; padding: 2px 8px; border-radius: 5px; }
+        .data-value { color: #000; font-weight: 500; }
+        
+        .error { color: #d32f2f; background: #ffebee; padding: 15px; border-radius: 10px; margin-top: 15px; }
+        .loading { color: #1a73e8; font-weight: bold; margin-top: 15px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>مكتب الأخوين التكنولوجي</h1>
-    <p>أدخل رقم الوصل لعرض كافة التفاصيل</p>
+    <h1>مكتب الأخوين </h1>
+    <p>أدخل رقم الوصل لمعرفة كافة تفاصيل جهازك</p>
 </header>
 
-<div class="tracking-container">
-    <h3>🔍 استعلام عن وصل</h3>
-    <div class="tracking-box">
-        <input type="text" id="orderInput" placeholder="اكتب رقم الوصل هنا">
-        <button class="btn-track" onclick="getDetails()">بحث تفصيلي</button>
+<div class="search-section">
+    <h3>🔍 استعلام عن الوصل</h3>
+    <div class="search-box">
+        <input type="text" id="orderID" placeholder="اكتب رقم الوصل هنا (مثلاً: 122)">
+        <button class="btn-search" onclick="fetchOrderData()">بحث الآن</button>
     </div>
-    <div id="result"></div>
-</div>
-
-<div class="container">
-    <div class="card">
-        <img src="mobile.png" style="width:100%; height:150px; object-fit:cover;">
-        <h3>صيانة الهواتف</h3>
-        <a href="https://wa.me/9647830331712" class="btn-wa">واتساب</a>
-    </div>
-    <div class="card">
-        <img src="laptop.jpg" style="width:100%; height:150px; object-fit:cover;">
-        <h3>صيانة الحاسبات</h3>
-        <a href="https://wa.me/9647830331834" class="btn-wa">واتساب</a>
-    </div>
+    
+    <div id="loading" class="loading" style="display:none;">جاري جلب البيانات من السجل...</div>
+    <div id="details-output"></div>
 </div>
 
 <script>
-async function getDetails() {
-    const orderNum = document.getElementById('orderInput').value.trim();
-    const resultDiv = document.getElementById('result');
-    if (!orderNum) { alert("اكتب رقم الوصل أولاً"); return; }
+async function fetchOrderData() {
+    const id = document.getElementById('orderID').value.trim();
+    const output = document.getElementById('details-output');
+    const loading = document.getElementById('loading');
+    
+    if(!id) { alert("من فضلك أدخل رقم الوصل"); return; }
 
-    resultDiv.style.display = "block";
-    resultDiv.innerHTML = "جاري جلب المعلومات...";
+    output.style.display = "none";
+    loading.style.display = "block";
 
     try {
-        // إضافة t=${Date.now()} تجبر جوجل على إعطائنا آخر نسخة من الجدول بدون "كاش"
-        const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&t=${Date.now()}`;
-        const response = await fetch(url);
-        const text = await response.text();
-        const rows = text.split('\n').map(r => r.split(','));
+        // الربط بالجدول مع كود لمنع الكاش لضمان تحديث البيانات فوراً
+        const sheetUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&v=${new Date().getTime()}`;
+        const response = await fetch(sheetUrl);
+        const csvText = await response.text();
         
-        const headers = rows[0]; 
-        const dataRow = rows.find(r => r[0].trim() === orderNum);
+        // تحويل النص إلى مصفوفة
+        const lines = csvText.split('\n').map(line => line.split(','));
+        const headers = lines[0]; // العناوين من السطر الأول في جدولك
+        
+        // البحث عن السطر اللي يحتوي رقم الوصل (بافتراض إنه العمود الثالث حسب صورتك)
+        // راح نبحث بكل الأعمدة لضمان الدقة
+        const targetRow = lines.find(row => row.some(cell => cell.trim() === id));
 
-        if (dataRow) {
-            let resHtml = `<div style="text-align:center; border-bottom:2px solid #1a73e8; padding-bottom:10px; margin-bottom:10px; font-weight:bold;">بيانات الوصل كاملاً</div>`;
-            dataRow.forEach((val, i) => {
-                resHtml += `
-                <div class="info-item">
-                    <span class="info-label">${headers[i] || 'معلومة'}:</span>
-                    <span class="info-value">${val}</span>
-                </div>`;
+        loading.style.display = "none";
+        output.style.display = "block";
+
+        if(targetRow) {
+            let html = `<div class="report-header">📋 تقرير الصيانة للوصل رقم (${id})</div>`;
+            
+            targetRow.forEach((value, index) => {
+                let label = headers[index] ? headers[index].trim() : `معلومة ${index+1}`;
+                if(value.trim() !== "") { // عرض الحقول اللي بيها بيانات بس
+                    html += `
+                    <div class="data-row">
+                        <span class="data-value">${value.trim()}</span>
+                        <span class="data-label">${label}</span>
+                    </div>`;
+                }
             });
-            resultDiv.innerHTML = resHtml;
+            output.innerHTML = html;
         } else {
-            resultDiv.innerHTML = `<div class="status-notfound">لم نجد بيانات لهذا الرقم! تأكد من الرقم الصحيح.</div>`;
+            output.innerHTML = `<div class="error">❌ عذراً، رقم الوصل (${id}) غير موجود في سجلاتنا. يرجى التأكد من الرقم.</div>`;
         }
-    } catch (err) {
-        resultDiv.innerHTML = "خطأ في الاتصال بالجدول.";
+    } catch(err) {
+        loading.style.display = "none";
+        output.style.display = "block";
+        output.innerHTML = `<div class="error">⚠️ فشل الاتصال بقاعدة البيانات. تأكد من الإنترنت.</div>`;
     }
 }
 </script>
+
 </body>
 </html>
