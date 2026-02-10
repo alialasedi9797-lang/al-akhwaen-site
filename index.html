@@ -6,73 +6,56 @@
     <title>مكتب الأخوين التكنولوجي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --main: #1a73e8; --accent: #ffa000; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; }
-        
-        header {
-            background: linear-gradient(135deg, var(--main), #0d47a1);
-            color: white; padding: 50px 20px 100px 20px; border-radius: 0 0 50px 50px;
-        }
-
-        .search-area {
-            background: white; max-width: 500px; margin: -60px auto 30px auto;
-            padding: 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            position: relative; z-index: 10;
-        }
-
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; text-align: center; }
+        header { background: #1a73e8; color: white; padding: 40px 20px 80px 20px; border-radius: 0 0 50px 50px; }
+        .search-container { background: white; max-width: 500px; margin: -50px auto 30px auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .search-box { display: flex; gap: 10px; margin-top: 15px; }
         input { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 12px; outline: none; text-align: center; }
-        button { padding: 12px 25px; background: var(--main); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
-
+        button { padding: 12px 25px; background: #1a73e8; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        
         /* عرض النتائج سطر بسطر */
         #result { margin-top: 20px; display: none; text-align: right; }
-        .data-row { 
-            display: flex; justify-content: space-between; padding: 10px; 
-            border-bottom: 1px solid #eee; background: #fff;
-        }
-        .data-label { color: var(--main); font-weight: bold; }
-        .data-val { color: #333; }
+        .info-line { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
+        .info-label { font-weight: bold; color: #1a73e8; }
+        .error-msg { color: #d32f2f; background: #ffebee; padding: 15px; border-radius: 12px; font-weight: bold; }
 
-        .error-msg { background: #fee2e2; color: #dc2626; padding: 15px; border-radius: 12px; font-weight: bold; }
-
-        /* الأقسام مالتك */
+        /* الأقسام */
         .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
-        .card { background: white; border-radius: 20px; width: 220px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); border: 1px solid var(--main); }
-        .card i { font-size: 3em; color: var(--main); margin-bottom: 15px; display: block; }
+        .card { background: white; border-radius: 20px; width: 220px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .card i { font-size: 3em; color: #1a73e8; margin-bottom: 10px; display: block; }
         .btn-wa { display: inline-block; margin-top: 10px; padding: 8px 20px; background: #25d366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>مكتب الأخوين</h1>
-    <p>تتبع حالة جهازك بكل سهولة</p>
+    <h1>مكتب الأخوين التكنولوجي</h1>
+    <p>صيانة موبايل | حاسبات | كاميرات | مشاريع</p>
 </header>
 
-<div class="search-area">
-    <h3 style="margin:0; color: var(--main);"><i class="fas fa-search"></i> استعلام عن وصل</h3>
+<div class="search-container">
+    <h3>🔍 تتبع جهازك من البيت</h3>
     <div class="search-box">
-        <input type="text" id="orderID" placeholder="اكتب رقم الوصل هنا">
-        <button onclick="search()">بحث</button>
+        <input type="text" id="orderID" placeholder="أدخل رقم الوصل">
+        <button onclick="track()">بحث</button>
     </div>
     <div id="result"></div>
 </div>
 
 <div class="grid">
-    <div class="card"><i class="fas fa-mobile-alt"></i><h3>صيانة الموبايل</h3><a href="https://wa.me/9647830331712" class="btn-wa">تواصل</a></div>
-    <div class="card"><i class="fas fa-laptop"></i><h3>صيانة الحاسبات</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
+    <div class="card"><i class="fas fa-mobile-alt"></i><h3>الهواتف</h3><a href="https://wa.me/9647830331712" class="btn-wa">تواصل</a></div>
+    <div class="card"><i class="fas fa-laptop"></i><h3>الحاسبات</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
     <div class="card"><i class="fas fa-camera"></i><h3>الكاميرات</h3><a href="https://wa.me/9647830331712" class="btn-wa">تواصل</a></div>
-    <div class="card"><i class="fas fa-graduation-cap"></i><h3>مشاريع تخرج</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
+    <div class="card"><i class="fas fa-graduation-cap"></i><h3>المشاريع</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
 </div>
 
 <script>
-async function search() {
+async function track() {
     const id = document.getElementById('orderID').value.trim();
-    const out = document.getElementById('result');
+    const resDiv = document.getElementById('result');
     if(!id) return;
-    out.style.display = "block";
-    out.innerHTML = "جاري البحث...";
+    resDiv.style.display = "block";
+    resDiv.innerHTML = "جاري البحث...";
 
     try {
         const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&t=${Date.now()}`;
@@ -80,21 +63,22 @@ async function search() {
         const data = await res.text();
         const rows = data.split('\n').map(r => r.split(','));
         const headers = rows[0];
+        // نبحث عن السطر اللي يطابق رقم الوصل
         const row = rows.find(r => r[0]?.trim() === id || r[2]?.trim() === id);
 
         if(row) {
-            let html = `<div style="text-align:center; font-weight:bold; color:green; margin-bottom:10px;">✅ تفاصيل الوصل:</div>`;
+            let html = `<div style="text-align:center; font-weight:bold; color:green; margin-bottom:10px;">✅ تفاصيل الجهاز:</div>`;
             row.forEach((val, i) => {
                 if(val && val.trim() !== "") {
-                    html += `<div class="data-row"><span class="data-val">${val.trim()}</span><span class="data-label">${headers[i] ? headers[i].trim() : 'معلومة'}:</span></div>`;
+                    html += `<div class="info-line"><span>${val.trim()}</span><span class="info-label">${headers[i] ? headers[i].trim() : 'معلومة'}:</span></div>`;
                 }
             });
-            out.innerHTML = html;
+            resDiv.innerHTML = html;
         } else {
-            out.innerHTML = `<div class="error-msg">❌ عذراً، لا يوجد وصل بهذا الرقم.</div>`;
+            resDiv.innerHTML = `<div class="error-msg">عذراً.. لا يوجد وصل بهذا الرقم. تأكد من الرقم مرة أخرى.</div>`;
         }
     } catch(e) {
-        out.innerHTML = `<div class="error-msg">حدث خطأ في جلب البيانات.</div>`;
+        resDiv.innerHTML = `<div class="error-msg">حدث خطأ في جلب البيانات.</div>`;
     }
 }
 </script>
