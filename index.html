@@ -3,107 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تتبع الأجهزة - مكتب الأخوين</title>
+    <title>مكتب الأخوين - خدمات تكنولوجية متكاملة</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center; background-color: #f8f9fa; margin: 0; padding: 0; }
-        header { background: #1a73e8; color: white; padding: 40px 20px 60px 20px; border-radius: 0 0 30px 30px; }
-        .main-container { max-width: 500px; margin: -30px auto 30px auto; padding: 0 15px; }
-        .search-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 5px solid #ffa000; }
-        .input-group { display: flex; gap: 10px; margin-top: 15px; }
-        input { flex: 1; padding: 14px; border: 2px solid #eee; border-radius: 12px; font-size: 16px; outline: none; }
-        .btn-search { padding: 12px 25px; background: #1a73e8; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            background-color: #f4f7f6; 
+            margin: 0; 
+            padding: 20px; 
+            color: #333;
+        }
         
-        /* صندوق النتيجة */
-        #result-display { margin-top: 25px; display: none; text-align: right; }
-        
-        /* تمييز الملاحظات (حالة الجهاز) */
-        .status-highlight { background: #fff8e1; border: 2px dashed #ffa000; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
-        .status-label { display: block; font-weight: bold; color: #ff6f00; margin-bottom: 5px; font-size: 1.1em; }
-        .status-text { font-size: 1.3em; font-weight: bold; color: #333; }
+        header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 40px 20px;
+            border-radius: 0 0 50px 50px;
+            margin: -20px -20px 40px -20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
 
-        /* باقي البيانات */
-        .details-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; }
-        .detail-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #f1f1f1; }
-        .label { font-weight: bold; color: #1a73e8; font-size: 0.9em; }
-        .val { color: #444; }
+        h1 { margin: 0; font-size: 2.2em; }
+        .subtitle { font-size: 1.1em; opacity: 0.9; margin-top: 10px; }
 
-        .error-box { background: #ffebee; color: #c62828; padding: 15px; border-radius: 10px; margin-top: 10px; }
+        .container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 20px; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card { 
+            background: #ffffff; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            width: 280px; 
+            overflow: hidden; 
+            transition: 0.3s;
+            border: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .card:hover { transform: translateY(-10px); }
+
+        .card img { 
+            width: 100%; 
+            height: 180px; 
+            object-fit: cover; 
+            background-color: #eaeaea;
+        }
+
+        .card-content { padding: 20px; }
+        .card h3 { margin: 0 0 10px 0; color: #1a73e8; font-size: 1.3em; height: 50px; display: flex; align-items: center; justify-content: center; }
+        .card p { color: #666; font-size: 0.95em; line-height: 1.5; margin-bottom: 20px; height: 60px; overflow: hidden; }
+
+        .btn { 
+            display: inline-block; 
+            padding: 10px 25px; 
+            background-color: #25d366; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            transition: 0.3s;
+        }
+
+        .btn:hover { background-color: #128c7e; }
+
+        .visitor-counter { margin-top: 50px; padding: 20px; font-size: 0.9em; color: #888; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>مكتب الأخوين التكنولوجي</h1>
-    <p>أدخل رقم الوصل لمتابعة حالة جهازك</p>
-</header>
+    <header>
+        <h1>مكتب الأخوين</h1>
+        <div class="subtitle">صيانة هواتف وحاسبات | كاميرات مراقبة | مشاريع تخرج</div>
+    </header>
 
-<div class="main-container">
-    <div class="search-card">
-        <h3>🔍 استعلام عن حالة الصيانة</h3>
-        <div class="input-group">
-            <input type="text" id="orderID" placeholder="رقم الوصل (مثال: 122)">
-            <button class="btn-search" onclick="startTracking()">تتبع</button>
+    <div class="container">
+        <div class="card">
+            <img src="mobile.png" alt="صيانة الهواتف">
+            <div class="card-content">
+                <h3>صيانة الهواتف</h3>
+                <p>تصليح كافة أنواع الموبايلات، تبديل شاشات وبطاريات بأحدث الأجهزة.</p>
+                <a href="https://wa.me/9647830331712" class="btn">اطلب صيانة</a>
+            </div>
         </div>
-        
-        <div id="result-display"></div>
+
+        <div class="card">
+            <img src="laptop.jpg" alt="صيانة الحاسبات">
+            <div class="card-content">
+                <h3>صيانة الحاسبات</h3>
+                <p>فرمتة، تنصيب برامج، صيانة هاردوير وتطوير الحاسبات (SSD).</p>
+                <a href="https://wa.me/9647830331834" class="btn">اطلب صيانة</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="cameras.jpg" alt="كاميرات المراقبة">
+            <div class="card-content">
+                <h3>كاميرات المراقبة</h3>
+                <p>تنصيب وصيانة أحدث منظومات الكاميرات بدقة عالية وربطها على الموبايل.</p>
+                <a href="https://wa.me/9647830331712" class="btn">احجز موعد</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="projects.jpg" alt="مشاريع التخرج">
+            <div class="card-content">
+                <h3>مشاريع التخرج</h3>
+                <p>إنشاء مشاريع التخرج البرمجية والإلكترونية وبيع القطع والأجزاء الإلكترونية.</p>
+                <a href="https://wa.me/9647830331834" class="btn">استفسر الآن</a>
+            </div>
+        </div>
     </div>
-</div>
 
-<script>
-async function startTracking() {
-    const id = document.getElementById('orderID').value.trim();
-    const display = document.getElementById('result-display');
-    if(!id) return;
-
-    display.style.display = "block";
-    display.innerHTML = "<p style='text-align:center'>جاري البحث في السجلات...</p>";
-
-    try {
-        const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&t=${new Date().getTime()}`;
-        const res = await fetch(url);
-        const data = await res.text();
-        
-        const lines = data.split('\n').map(line => line.split(','));
-        const headers = lines[0];
-        
-        // البحث عن رقم الوصل (بكل الأعمدة لضمان الدقة)
-        const row = lines.find(r => r.some(cell => cell.trim() === id));
-
-        if(row) {
-            // استخراج الملاحظات (نفترض أنها العمود الأخير أو ابحث عن اسمها)
-            let notesIndex = headers.findIndex(h => h.includes("ملاحظات") || h.includes("الملاحظات"));
-            let notes = notesIndex !== -1 ? row[notesIndex] : "لا يوجد ملاحظات حالياً";
-
-            let html = `
-                <div class="status-highlight">
-                    <span class="status-label">📍 حالة الجهاز الآن:</span>
-                    <span class="status-text">${notes}</span>
-                </div>
-                <div class="details-table">
-            `;
-
-            row.forEach((value, i) => {
-                // نعرض باقي المعلومات ما عدا الملاحظات لأننا عرضناها فوق بتميز
-                if(i !== notesIndex && value.trim() !== "") {
-                    html += `
-                        <div class="detail-row">
-                            <span class="val">${value.trim()}</span>
-                            <span class="label">${headers[i] ? headers[i].trim() : 'معلومة'}</span>
-                        </div>
-                    `;
-                }
-            });
-
-            html += `</div>`;
-            display.innerHTML = html;
-        } else {
-            display.innerHTML = `<div class="error-box">❌ لم يتم العثور على رقم الوصل (${id}). تأكد من الرقم المكتوب في الورقة.</div>`;
-        }
-    } catch(e) {
-        display.innerHTML = `<div class="error-box">⚠️ فشل الاتصال. تأكد من الإنترنت وحاول ثانية.</div>`;
-    }
-}
-</script>
+    <div class="visitor-counter">
+        <p>عدد زوار المكتب أونلاين:</p>
+        <img src="https://hitwebcounter.com/counter/counter.php?page=alakhwaen&style=0006&nbdigits=5&type=page&initCount=0" border="0" />
+    </div>
 
 </body>
 </html>
