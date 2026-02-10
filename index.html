@@ -3,135 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتب الأخوين التكنولوجي</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>مكتب الأخوين - استعلام عن وصل</title>
     <style>
-        :root { --blue: #1a73e8; --green: #25d366; --orange: #ffa000; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
-        
-        header {
-            background: linear-gradient(135deg, var(--blue), #0d47a1);
-            color: white; padding: 40px 20px; text-align: center;
-            border-radius: 0 0 30px 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        /* حاوية الأقسام الأربعة (تظهر أولاً) */
-        .grid-container { 
-            display: flex; flex-wrap: wrap; justify-content: center; 
-            gap: 20px; padding: 30px 15px; max-width: 1100px; margin: 0 auto; 
-        }
-        .card { 
-            background: white; border-radius: 20px; width: 220px; padding: 25px 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; text-align: center;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .card i { font-size: 3em; color: var(--blue); margin-bottom: 15px; }
-        .btn-wa { 
-            display: inline-block; margin-top: 15px; padding: 8px 20px; 
-            background: var(--green); color: white; text-decoration: none; 
-            border-radius: 50px; font-weight: bold; font-size: 0.9em;
-        }
-
-        /* مربع البحث (يظهر أسفل الأقسام) */
-        .search-container {
-            background: white; max-width: 500px; margin: 20px auto 50px auto;
-            padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-top: 5px solid var(--orange);
-        }
-        .search-box { display: flex; gap: 10px; margin-top: 15px; }
-        input { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 12px; outline: none; text-align: center; font-size: 1em; }
-        .btn-track { padding: 12px 25px; background: var(--blue); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
-
-        /* نتائج البحث سطر بسطر */
-        #result { margin-top: 20px; display: none; text-align: right; }
-        .data-row { 
-            display: flex; justify-content: space-between; padding: 10px; 
-            border-bottom: 1px solid #f1f1f1; font-size: 1em;
-        }
-        .data-label { color: var(--blue); font-weight: bold; }
-        .data-val { color: #333; font-weight: 500; }
-        .error-msg { color: #d32f2f; background: #ffebee; padding: 15px; border-radius: 12px; font-weight: bold; }
+        :root { --primary: #2c3e50; --accent: #e74c3c; --light: #ecf0f1; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--light); text-align: center; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h2 { color: var(--primary); }
+        .search-box { margin: 20px 0; display: flex; gap: 10px; }
+        input { flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 8px; outline: none; font-size: 16px; }
+        button { padding: 12px 25px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: var(--accent); }
+        #result { margin-top: 25px; text-align: right; display: none; border-top: 2px solid var(--light); padding-top: 20px; }
+        .status-badge { padding: 5px 15px; border-radius: 20px; color: white; font-weight: bold; }
+        .in-progress { background: #f39c12; }
+        .done { background: #27ae60; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>مكتب الأخوين التكنولوجي</h1>
-    <p>أهلاً بك في منصة خدماتنا المتكاملة</p>
-</header>
+    <div class="container">
+        <h2>مكتب الأخوين للصيانة</h2>
+        <p>أدخل رقم الوصل لمتابعة حالة جهازك</p>
 
-<div class="grid-container">
-    <div class="card">
-        <i class="fas fa-mobile-alt"></i>
-        <h3>صيانة الموبايل</h3>
-        <a href="https://wa.me/9647830331712" class="btn-wa">تواصل معنا</a>
+        <div class="search-box">
+            <input type="number" id="receiptId" placeholder="اكتب رقم الوصل هنا...">
+            <button onclick="searchReceipt()">بحث</button>
+        </div>
+
+        <div id="result">
+            </div>
     </div>
-    <div class="card">
-        <i class="fas fa-laptop"></i>
-        <h3>صيانة الحاسبات</h3>
-        <a href="https://wa.me/9647830331834" class="btn-wa">تواصل معنا</a>
-    </div>
-    <div class="card">
-        <i class="fas fa-video"></i>
-        <h3>كاميرات المراقبة</h3>
-        <a href="https://wa.me/9647830331712" class="btn-wa">احجز الآن</a>
-    </div>
-    <div class="card">
-        <i class="fas fa-user-graduate"></i>
-        <h3>مشاريع تخرج</h3>
-        <a href="https://wa.me/9647830331834" class="btn-wa">استفسر الآن</a>
-    </div>
-</div>
 
-<div class="search-container">
-    <h3 style="margin:0; color: var(--blue);"><i class="fas fa-search"></i> تتبع حالة وصلك</h3>
-    <p style="font-size: 0.9em; color: #666;">أدخل رقم الوصل لمعرفة أين وصل جهازك</p>
-    <div class="search-box">
-        <input type="text" id="orderID" placeholder="رقم الوصل (مثلاً 122)">
-        <button class="btn-track" onclick="startSearch()">بحث</button>
-    </div>
-    <div id="result"></div>
-</div>
+    <script>
+        // هنا تضع بياناتك المستخرجة من الإكسل بصيغة JSON
+        // يمكنك لاحقاً ربط هذا المتغير بملف خارجي على GitHub
+        const data = [
+            { id: 122, name: "علي نعمه سالم", status: "في الصيانة", total: 30, paid: 20, remaining: 10 },
+            { id: 4, name: "حيدر", status: "تم", total: 20, paid: 1, remaining: 2 }
+        ];
 
-<script>
-async function startSearch() {
-    const id = document.getElementById('orderID').value.trim();
-    const out = document.getElementById('result');
-    if(!id) return;
+        function searchReceipt() {
+            const input = document.getElementById('receiptId').value;
+            const resultDiv = document.getElementById('result');
+            const receipt = data.find(item => item.id == input);
 
-    out.style.display = "block";
-    out.innerHTML = "<p style='text-align:center;'>جاري جلب المعلومات من السجلات...</p>";
-
-    try {
-        const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&t=${Date.now()}`;
-        const res = await fetch(url);
-        const csv = await res.text();
-        const rows = csv.split('\n').map(r => r.split(','));
-        const headers = rows[0];
-        
-        // البحث عن رقم الوصل في السطور
-        const targetRow = rows.find(r => r.some(cell => cell.trim() === id));
-
-        if(targetRow) {
-            let html = `<div style="text-align:center; font-weight:bold; color:green; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">✅ تفاصيل الجهاز الحالية</div>`;
-            targetRow.forEach((val, i) => {
-                if(val && val.trim() !== "") {
-                    html += `
-                        <div class="data-row">
-                            <span class="data-val">${val.trim()}</span>
-                            <span class="data-label">${headers[i] ? headers[i].trim() : 'معلومة'}:</span>
-                        </div>`;
-                }
-            });
-            out.innerHTML = html;
-        } else {
-            out.innerHTML = `<div class="error-msg">❌ عذراً، رقم الوصل (${id}) غير موجود في سجلاتنا.</div>`;
+            if (receipt) {
+                const statusClass = receipt.status === "تم" ? "done" : "in-progress";
+                resultDiv.style.display = "block";
+                resultDiv.innerHTML = `
+                    <p><strong>اسم الزبون:</strong> ${receipt.name}</p>
+                    <p><strong>الحالة:</strong> <span class="status-badge ${statusClass}">${receipt.status}</span></p>
+                    <p><strong>المبلغ الكلي:</strong> ${receipt.total} ألف</p>
+                    <p><strong>الواصل:</strong> ${receipt.paid} ألف</p>
+                    <p><strong>المتبقي:</strong> <span style="color:red">${receipt.remaining} ألف</span></p>
+                `;
+            } else {
+                resultDiv.style.display = "block";
+                resultDiv.innerHTML = "<p style='color:red; text-align:center;'>عذراً، رقم الوصل غير موجود.</p>";
+            }
         }
-    } catch(e) {
-        out.innerHTML = `<div class="error-msg">حدث خطأ في الاتصال بقاعدة البيانات.</div>`;
-    }
-}
-</script>
-
+    </script>
 </body>
 </html>
