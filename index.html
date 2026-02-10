@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتب الأخوين </title>
+    <title>مكتب الأخوين التكنولوجي</title>
     <style>
         :root { --blue: #1a73e8; --orange: #ffa000; --bg: #f4f7f6; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
@@ -18,7 +18,6 @@
         h1 { margin: 0; font-size: 2.4em; }
         .subtitle { font-size: 1.1em; opacity: 0.9; margin-top: 10px; }
 
-        /* صندوق البحث */
         .search-container {
             background: white;
             max-width: 500px;
@@ -34,26 +33,27 @@
         input { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 12px; outline: none; text-align: center; font-size: 1.1em; }
         .btn-track { padding: 12px 25px; background: var(--blue); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
 
-        /* عرض النتائج - تفاصيل مرتبة */
+        /* منطقة عرض النتائج الجديدة */
         #search-result { margin-top: 20px; display: none; text-align: right; }
-        .result-item { 
-            display: flex; 
-            justify-content: space-between; 
-            padding: 12px 10px; 
-            border-bottom: 1px solid #eee; 
-            font-size: 1em;
-        }
-        .result-label { font-weight: bold; color: var(--blue); }
-        .result-value { color: #333; font-weight: 500; }
         
-        /* رسائل الخطأ والتحميل */
-        .not-found { color: #d32f2f; background: #ffebee; padding: 15px; border-radius: 12px; font-weight: bold; }
-        .loading { color: var(--blue); font-weight: bold; }
+        .result-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .res-label { font-weight: bold; color: var(--blue); font-size: 0.9em; }
+        .res-value { font-weight: 600; color: #333; font-size: 1.05em; }
 
-        /* الأقسام الأربعة */
-        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; margin-top: 20px; }
-        .card { background: white; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); width: 260px; overflow: hidden; border: 1px solid #eee; }
-        .card img { width: 100%; height: 160px; object-fit: cover; }
+        .not-found { color: #d32f2f; background: #ffebee; padding: 15px; border-radius: 12px; font-weight: bold; margin-top: 10px; }
+        
+        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
+        .card { background: white; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); width: 250px; overflow: hidden; border: 1px solid #eee; }
         .card-content { padding: 15px; }
         .btn-wa { display: inline-block; padding: 8px 20px; background: #25d366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
     </style>
@@ -61,7 +61,7 @@
 <body>
 
     <header>
-        <h1>مكتب الأخوين </h1>
+        <h1>مكتب الأخوين التكنولوجي</h1>
         <div class="subtitle">صيانة هواتف | حاسبات | كاميرات | مشاريع تخرج</div>
     </header>
 
@@ -76,20 +76,10 @@
 
     <div class="container">
         <div class="card">
-            <img src="mobile.png" alt="صيانة الهواتف">
             <div class="card-content"><h3>صيانة الهواتف</h3><a href="https://wa.me/9647830331712" class="btn-wa">تواصل</a></div>
         </div>
         <div class="card">
-            <img src="laptop.jpg" alt="صيانة الحاسبات">
             <div class="card-content"><h3>صيانة الحاسبات</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
-        </div>
-        <div class="card">
-            <img src="cameras.jpg" alt="كاميرات المراقبة">
-            <div class="card-content"><h3>كاميرات المراقبة</h3><a href="https://wa.me/9647830331712" class="btn-wa">تواصل</a></div>
-        </div>
-        <div class="card">
-            <img src="projects.jpg" alt="مشاريع التخرج">
-            <div class="card-content"><h3>مشاريع التخرج</h3><a href="https://wa.me/9647830331834" class="btn-wa">تواصل</a></div>
         </div>
     </div>
 
@@ -100,35 +90,39 @@
             if (!id) return;
 
             resultDiv.style.display = "block";
-            resultDiv.innerHTML = "<p class='loading'>جاري البحث في السجلات...</p>";
+            resultDiv.innerHTML = "<p style='text-align:center;'>جاري جلب بيانات الوصل...</p>";
 
             try {
                 const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&t=${new Date().getTime()}`;
                 const res = await fetch(url);
-                const data = await res.text();
-                const rows = data.split('\n').map(r => r.split(','));
+                const csvData = await res.text();
+                
+                // تنظيف البيانات وتحويلها لمصفوفة
+                const rows = csvData.split('\n').map(r => r.split(',').map(cell => cell.replace(/"/g, '').trim()));
                 const headers = rows[0];
                 
-                // البحث عن السطر اللي يطابق رقم الوصل
-                const found = rows.find(r => r[0].trim() === id);
+                // البحث عن السطر (نتأكد إن رقم الوصل موجود بأي عمود بس الأفضل الأول)
+                const foundRow = rows.find(r => r[0] === id || r[2] === id); 
 
-                if (found) {
-                    let html = `<div style="text-align:center; font-weight:bold; margin-bottom:15px; color:#155724;">✅ تم العثور على الوصل</div>`;
-                    found.forEach((cell, i) => {
-                        if (cell.trim() !== "") {
+                if (foundRow) {
+                    let html = `<div style="text-align:center; font-weight:bold; margin-bottom:15px; color:#2e7d32;">✅ تفاصيل الوصل:</div>`;
+                    
+                    foundRow.forEach((value, i) => {
+                        if (value && value !== "") {
+                            let label = headers[i] ? headers[i] : `معلومة ${i+1}`;
                             html += `
-                                <div class="result-item">
-                                    <span class="result-value">${cell.trim()}</span>
-                                    <span class="result-label">${headers[i] ? headers[i].trim() : 'معلومة'}:</span>
+                                <div class="result-card">
+                                    <span class="res-value">${value}</span>
+                                    <span class="res-label">${label}:</span>
                                 </div>`;
                         }
                     });
                     resultDiv.innerHTML = html;
                 } else {
-                    resultDiv.innerHTML = `<div class="not-found">عذراً.. لا يوجد وصل بهذا الرقم. تأكد من الرقم مرة أخرى.</div>`;
+                    resultDiv.innerHTML = `<div class="not-found">عذراً.. رقم الوصل (${id}) غير موجود. تأكد من الرقم المكتوب بالوصل.</div>`;
                 }
             } catch (e) {
-                resultDiv.innerHTML = `<div class="not-found">حدث خطأ في الاتصال. يرجى المحاولة لاحقاً.</div>`;
+                resultDiv.innerHTML = `<div class="not-found">⚠️ فشل الاتصال بالبيانات. حاول مرة أخرى.</div>`;
             }
         }
     </script>
