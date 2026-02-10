@@ -3,109 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتب الأخوين التكنولوجي</title>
+    <title>مكتب الأخوين - تتبع تفصيلي</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #f4f7f6; margin: 0; padding: 0; color: #333; }
-        header { background-color: #1a73e8; color: white; padding: 40px 20px 80px 20px; border-radius: 0 0 50px 50px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { margin: 0; font-size: 2.2em; }
-        .subtitle { font-size: 1.1em; opacity: 0.9; margin-top: 10px; }
-        
-        /* صندوق التتبع */
-        .tracking-container { background: white; max-width: 550px; margin: -40px auto 30px auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; z-index: 10; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center; background-color: #f4f7f6; margin: 0; padding: 0; }
+        header { background: #1a73e8; color: white; padding: 40px 20px 80px 20px; border-radius: 0 0 50px 50px; }
+        .tracking-container { background: white; max-width: 500px; margin: -50px auto 30px auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; z-index: 10; border-bottom: 5px solid #1a73e8; }
         .tracking-box { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
-        input { padding: 12px; border: 2px solid #eee; border-radius: 12px; width: 60%; outline: none; font-size: 1em; }
-        .btn-track { padding: 12px 25px; background-color: #1a73e8; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        input { padding: 12px; border: 2px solid #eee; border-radius: 12px; width: 60%; outline: none; }
+        .btn-track { padding: 12px 20px; background: #1a73e8; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
         
-        /* عرض معلومات الوصل بالكامل */
-        #result { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; text-align: right; line-height: 1.8; }
-        .info-row { border-bottom: 1px solid rgba(0,0,0,0.05); padding: 8px 0; display: flex; justify-content: space-between; }
+        /* صندوق النتائج التفصيلي */
+        #result { margin-top: 20px; padding: 15px; border-radius: 12px; display: none; text-align: right; background: #f9f9f9; border: 1px solid #ddd; }
+        .info-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.95em; }
         .info-label { font-weight: bold; color: #1a73e8; }
-        
-        .status-box { background-color: #e3f2fd; border-right: 5px solid #1a73e8; }
-        .status-notfound { background-color: #f8d7da; color: #721c24; text-align: center; }
+        .info-value { color: #333; }
+        .status-notfound { color: #721c24; background: #f8d7da; text-align: center; padding: 10px; border-radius: 8px; }
 
-        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .card { background: #ffffff; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 280px; overflow: hidden; transition: 0.3s; border: 1px solid #eee; }
-        .card img { width: 100%; height: 180px; object-fit: cover; }
-        .card-content { padding: 20px; }
-        .btn-wa { display: inline-block; padding: 10px 25px; background-color: #25d366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
+        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
+        .card { background: white; border-radius: 20px; width: 250px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .btn-wa { display: inline-block; padding: 10px 20px; background: #25d366; color: white; text-decoration: none; border-radius: 50px; margin: 15px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>مكتب الأخوين التكنولوجي</h1>
-        <div class="subtitle">صيانة هواتف | حاسبات | كاميرات | مشاريع تخرج</div>
-    </header>
+<header>
+    <h1>مكتب الأخوين التكنولوجي</h1>
+    <p>أدخل رقم الوصل لعرض كافة التفاصيل</p>
+</header>
 
-    <div class="tracking-container">
-        <h3>🔍 تتبع حالة جهازك</h3>
-        <div class="tracking-box">
-            <input type="text" id="orderNumber" placeholder="أدخل رقم الوصل">
-            <button class="btn-track" onclick="trackOrder()">بحث تفصيلي</button>
-        </div>
-        <div id="result"></div>
+<div class="tracking-container">
+    <h3>🔍 استعلام عن وصل</h3>
+    <div class="tracking-box">
+        <input type="text" id="orderInput" placeholder="اكتب رقم الوصل هنا">
+        <button class="btn-track" onclick="getDetails()">بحث تفصيلي</button>
     </div>
+    <div id="result"></div>
+</div>
 
-    <div class="container">
-        <div class="card">
-            <img src="mobile.png" alt="صيانة الهواتف">
-            <div class="card-content">
-                <h3>صيانة الهواتف</h3>
-                <a href="https://wa.me/9647830331712" class="btn-wa">اطلب صيانة</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="laptop.jpg" alt="صيانة الحاسبات">
-            <div class="card-content">
-                <h3>صيانة الحاسبات</h3>
-                <a href="https://wa.me/9647830331834" class="btn-wa">اطلب صيانة</a>
-            </div>
-        </div>
+<div class="container">
+    <div class="card">
+        <img src="mobile.png" style="width:100%; height:150px; object-fit:cover;">
+        <h3>صيانة الهواتف</h3>
+        <a href="https://wa.me/9647830331712" class="btn-wa">واتساب</a>
     </div>
+    <div class="card">
+        <img src="laptop.jpg" style="width:100%; height:150px; object-fit:cover;">
+        <h3>صيانة الحاسبات</h3>
+        <a href="https://wa.me/9647830331834" class="btn-wa">واتساب</a>
+    </div>
+</div>
 
-    <script>
-        async function trackOrder() {
-            const orderNum = document.getElementById('orderNumber').value.trim();
-            const resultDiv = document.getElementById('result');
-            if (!orderNum) return;
+<script>
+async function getDetails() {
+    const orderNum = document.getElementById('orderInput').value.trim();
+    const resultDiv = document.getElementById('result');
+    if (!orderNum) { alert("اكتب رقم الوصل أولاً"); return; }
 
-            resultDiv.style.display = "block";
-            resultDiv.innerHTML = "جاري جلب بيانات الوصل...";
-            resultDiv.className = "status-box";
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = "جاري جلب المعلومات...";
 
-            try {
-                const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv";
-                const response = await fetch(sheetUrl);
-                const data = await response.text();
-                
-                const rows = data.split('\n').map(row => row.split(','));
-                const headers = rows[0]; // السطر الأول (العناوين)
-                const foundRow = rows.find(row => row[0].trim() === orderNum);
+    try {
+        // إضافة t=${Date.now()} تجبر جوجل على إعطائنا آخر نسخة من الجدول بدون "كاش"
+        const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQkQ-3k94qAWqRRJ0ZKE6jID23TMJRyic8LumQ9-ywVlvET2JcWlP_OJEh2DHlLJaK7q089DHj8ZU5T/pub?output=csv&t=${Date.now()}`;
+        const response = await fetch(url);
+        const text = await response.text();
+        const rows = text.split('\n').map(r => r.split(','));
+        
+        const headers = rows[0]; 
+        const dataRow = rows.find(r => r[0].trim() === orderNum);
 
-                if (foundRow) {
-                    let htmlContent = `<div style="text-align:center; font-weight:bold; margin-bottom:10px;">تفاصيل الوصل رقم ${orderNum}</div>`;
-                    
-                    // حلقة لقراءة كل الخلايا في السطر
-                    foundRow.forEach((cell, index) => {
-                        let label = headers[index] ? headers[index] : `معلومة ${index + 1}`;
-                        htmlContent += `
-                            <div class="info-row">
-                                <span class="info-label">${label}:</span>
-                                <span>${cell}</span>
-                            </div>`;
-                    });
-                    
-                    resultDiv.innerHTML = htmlContent;
-                    resultDiv.className = "status-box";
-                } else {
-                    resultDiv.innerHTML = "❌ رقم الوصل غير موجود في سجلاتنا.";
-                    resultDiv.className = "status-notfound";
-                }
-            } catch (e) {
-                resultDiv.innerHTML = "⚠️ خطأ في الاتصال بقاعدة البيانات.";
-            }
+        if (dataRow) {
+            let resHtml = `<div style="text-align:center; border-bottom:2px solid #1a73e8; padding-bottom:10px; margin-bottom:10px; font-weight:bold;">بيانات الوصل كاملاً</div>`;
+            dataRow.forEach((val, i) => {
+                resHtml += `
+                <div class="info-item">
+                    <span class="info-label">${headers[i] || 'معلومة'}:</span>
+                    <span class="info-value">${val}</span>
+                </div>`;
+            });
+            resultDiv.innerHTML = resHtml;
+        } else {
+            resultDiv.innerHTML = `<div class="status-notfound">لم نجد بيانات لهذا الرقم! تأكد من الرقم الصحيح.</div>`;
         }
-    </script>
+    } catch (err) {
+        resultDiv.innerHTML = "خطأ في الاتصال بالجدول.";
+    }
+}
+</script>
 </body>
 </html>
